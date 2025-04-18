@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستند دستورات Git</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
+    <style>
+        body {
+            font-family: 'Vazir', Arial, sans-serif;
+            background: linear-gradient(to bottom, #e0f2fe, #bfdbfe);
+            margin: 0;
+            padding: 0;
+        }
+        pre {
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function Section({ title, commands }) {
+            return (
+                <div className="mb-8">
+                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">{title}</h2>
+                    {commands.map((cmd, index) => (
+                        <div key={index} className="mb-4">
+                            <p className="text-lg font-medium text-gray-800">{cmd.description}</p>
+                            <pre className="bg-gray-900 text-white p-4 rounded-lg shadow-md">
+                                <code>{cmd.code}</code>
+                            </pre>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        function App() {
+            const sections = [
+                {
+                    title: "1. تنظیمات اولیه",
+                    commands: [
+                        {
+                            description: "تنظیم نام و ایمیل کاربر: برای شناسایی تغییرات شما در تاریخچه پروژه",
+                            code: `git config --global user.name "Your Name"\ngit config --global user.email "your.email@example.com"`
+                        }
+                    ]
+                },
+                {
+                    title: "2. شروع کار با مخزن",
+                    commands: [
+                        {
+                            description: "ایجاد مخزن جدید: برای شروع یک پروژه جدید",
+                            code: `git init`
+                        },
+                        {
+                            description: "کلون کردن مخزن موجود: برای دانلود یک مخزن از راه دور",
+                            code: `git clone <repository-url>`
+                        }
+                    ]
+                },
+                {
+                    title: "3. کار با تغییرات",
+                    commands: [
+                        {
+                            description: "بررسی وضعیت مخزن: نمایش وضعیت فایل‌های تغییر یافته",
+                            code: `git status`
+                        },
+                        {
+                            description: "اضافه کردن فایل‌ها به مرحله‌بندی: آماده‌سازی فایل‌ها برای کامیت",
+                            code: `git add <file>\ngit add .`
+                        },
+                        {
+                            description: "ثبت تغییرات (کمیت): ذخیره تغییرات در تاریخچه",
+                            code: `git commit -m "پیام توضیحی"`
+                        }
+                    ]
+                },
+                {
+                    title: "4. کار با شاخه‌ها",
+                    commands: [
+                        {
+                            description: "ایجاد شاخه جدید: برای توسعه ویژگی‌های جدید",
+                            code: `git branch <branch-name>`
+                        },
+                        {
+                            description: "تغییر شاخه: جابه‌جایی بین شاخه‌ها",
+                            code: `git checkout <branch-name>`
+                        },
+                        {
+                            description: "ایجاد و تغییر به شاخه جدید: ترکیب ایجاد و جابه‌جایی",
+                            code: `git checkout -b <branch-name>`
+                        },
+                        {
+                            description: "ادغام شاخه‌ها: ترکیب تغییرات یک شاخه در شاخه دیگر",
+                            code: `git merge <branch-name>`
+                        }
+                    ]
+                },
+                {
+                    title: "5. کار با مخزن راه دور",
+                    commands: [
+                        {
+                            description: "ارسال تغییرات به مخزن راه دور: آپلود کامیت‌ها به سرور",
+                            code: `git push origin <branch-name>`
+                        },
+                        {
+                            description: "دریافت تغییرات از مخزن راه دور: به‌روزرسانی مخزن محلی",
+                            code: `git pull`
+                        },
+                        {
+                            description: "اضافه کردن مخزن راه دور: اتصال به یک سرور جدید",
+                            code: `git remote add origin <repository-url>`
+                        }
+                    ]
+                },
+                {
+                    title: "6. مدیریت مشکلات",
+                    commands: [
+                        {
+                            description: "لغو تغییرات فایل: بازگشت فایل به حالت قبلی",
+                            code: `git restore <file>`
+                        },
+                        {
+                            description: "حذف تغییرات مرحله‌بندی: حذف فایل از مرحله‌بندی",
+                            code: `git restore --staged <file>`
+                        },
+                        {
+                            description: "بازگشت به کامیت خاص: بازگشت به حالت یک کامیت خاص",
+                            code: `git reset --hard <commit-hash>`
+                        }
+                    ]
+                },
+                {
+                    title: "7. مشاهده تاریخچه",
+                    commands: [
+                        {
+                            description: "مشاهده تاریخچه کامیت‌ها: نمایش لاگ تغییرات",
+                            code: `git log`
+                        },
+                        {
+                            description: "مشاهده تغییرات فایل: نمایش تفاوت‌ها",
+                            code: `git diff`
+                        }
+                    ]
+                }
+            ];
+
+            return (
+                <div className="min-h-screen py-8">
+                    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow- Lillipop shadow-lg p-8">
+                        <h1 className="text-4xl font-bold text-center text-blue-800 mb-8">دستورات مهم Git برای تیم</h1>
+                        <p className="text-lg text-gray-600 mb-6">این مستند شامل دستورات پرکاربرد Git است که برای مدیریت پروژه‌های تیمی طراحی شده‌اند.</p>
+                        {sections.map((section, index) => (
+                            <Section key={index} title={section.title} commands={section.commands} />
+                        ))}
+                        <div className="mt-12 pt-6 border-t border-gray-200 text-center">
+                            <p className="text-gray-500">
+                                <strong>تهیه‌کننده:</strong>ali-ghasemi<br />
+                                <strong>تاریخ:</strong> 18 آوریل 2025
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
